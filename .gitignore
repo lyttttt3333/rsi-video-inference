@@ -1,0 +1,46 @@
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Model weights and metric assets
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+*.bin
+weights/
+metric-assets/
+eval-assets/
+
+# Container images and build state
+*.sqsh
+.enroot-build/
+
+# Generated media and archives
+*.mp4
+*.mov
+*.webm
+*.wav
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+
+# Runtime state
+outputs/
+runs/
+logs/
+cache/
+worktrees/
+campaign-state.json
+campaign-state.lock
+state.json
+state.lock
+*.log
+
+# Private evaluator overlay. Never commit held-out prompts or teachers.
+private_eval/
+benchmark/tasks/minimax-h3-hot-inference/tests/*
+!benchmark/tasks/minimax-h3-hot-inference/tests/README.md
