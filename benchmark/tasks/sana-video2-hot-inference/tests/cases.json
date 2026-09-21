@@ -1,0 +1,54 @@
+[
+  {
+    "prompt": "A woman with long, wavy blonde hair stands in a serene garden setting. She is wearing a delicate, sheer white blouse adorned with intricate lace detailing. Her eyes are closed, and she appears to be in a state of peaceful contemplation or meditation. The background is filled with lush greenery and vibrant flowers, creating a tranquil and natural atmosphere. The sunlight filters through the leaves, casting a warm glow over the scene. The camera remains steady, focusing on the woman as she stands still, embodying a moment of quiet reflection amidst nature.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 4,
+    "id": "sana_video2-05",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 71
+  },
+  {
+    "prompt": "A sleek red Jaguar sports car is captured in motion along a winding coastal road during a breathtaking sunset. The car, with its headlights on, glides smoothly down the wet asphalt, leaving a trail of motion blur behind it. The driver, visible through the windshield, appears focused and relaxed. The backdrop features a stunning ocean view with waves crashing against rocky cliffs, and the sky is painted with hues of orange and pink as the sun sets. The camera follows the car from a low angle, emphasizing its speed and the dynamic nature of the scene.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 7,
+    "id": "sana_video2-06",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 97
+  },
+  {
+    "prompt": "In a modern recording studio, a woman with blonde hair and headphones is intently adjusting knobs and sliders on a large mixing console. She wears a dark green sweater and a black wristband, focusing on fine-tuning the sound. In the background, another person plays a guitar, partially visible through a glass window. The studio is equipped with multiple speakers and microphones, creating a professional and immersive environment. The scene captures the meticulous process of audio production, highlighting the concentration and skill involved. A medium shot from a slightly elevated perspective.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 8,
+    "id": "sana_video2-07",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 113
+  },
+  {
+    "prompt": "A mysterious figure with flowing black hair and glowing eyes glides through a starry night sky. The person, clad in dark attire, moves gracefully, their long hair trailing behind them like a cosmic ribbon. The camera follows their fluid motion, capturing the ethereal beauty of the scene. The background is filled with twinkling stars, creating a serene and otherworldly atmosphere. The figure's silhouette stands out against the vastness of space, evoking a sense of wonder and mystery. A slow-motion shot, emphasizing the graceful movement and the starlit backdrop.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 9,
+    "id": "sana_video2-08",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 137
+  }
+]

@@ -1,0 +1,54 @@
+[
+  {
+    "prompt": "A close-up shot of an astronaut standing on the moon's surface, wearing a white spacesuit with an American flag patch on the arm. The helmet visor reflects the lunar landscape and stars in the night sky. The astronaut's face is partially visible through the clear visor, showing a serious expression. The background features the rugged, rocky terrain of the moon, with small craters and hills stretching into the distance under a starry sky. The scene captures the vastness and isolation of space exploration.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 0,
+    "id": "sana_video2-01",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 0
+  },
+  {
+    "prompt": "A vibrant, iridescent dragon with large, expressive eyes and spiky scales is seen in a sunny outdoor setting. The dragon is positioned on a patch of dirt, surrounded by greenery and a bright rainbow arching in the background. The dragon's mouth opens and closes, revealing its small teeth, as it looks around curiously. The sunlight casts a warm glow on the dragon's scales, highlighting its intricate patterns. The camera remains steady, focusing on the dragon's face and upper body, capturing its movements and expressions in detail.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 1,
+    "id": "sana_video2-02",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 17
+  },
+  {
+    "prompt": "A majestic white horse stands prominently in the foreground, its mane adorned with sparkling golden lights that shimmer like stars. The horse's eyes glow brightly, adding an ethereal quality to its presence. The background features a surreal landscape with floating islands covered in lush greenery, set against a cloudy sky filled with twinkling lights. The ocean stretches out behind the horse, creating a serene yet mystical atmosphere. The camera remains stationary, capturing the horse's stillness and the enchanting beauty of the surrounding environment.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 2,
+    "id": "sana_video2-03",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 31
+  },
+  {
+    "prompt": "In a cozy, vintage room adorned with floral wallpaper, a cartoon rooster sits comfortably in a floral-patterned armchair, sipping from a bottle of beer. The rooster, with its vibrant red comb and wattle, displays a range of expressions\u2014smiling, nodding, and opening its beak wide in a cheerful manner. The setting includes wooden furniture and another beer bottle on the table, adding to the relaxed atmosphere. The camera captures the rooster from a close-up angle, emphasizing its animated movements and lively demeanor.",
+    "source": "https://huggingface.co/datasets/Efficient-Large-Model/Sana-assets/resolve/main/Video2/assets/curated-20260812/metadata/dataset.json",
+    "source_type": "official_showcase_t2v",
+    "source_index": 3,
+    "id": "sana_video2-04",
+    "height": 544,
+    "width": 960,
+    "frames": 121,
+    "fps": 24,
+    "steps": 50,
+    "seed": 53
+  }
+]
