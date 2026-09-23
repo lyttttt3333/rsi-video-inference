@@ -260,11 +260,11 @@ def main() -> int:
         "mean_lpips": 0.0,
         "worst_lpips": 0.0,
         "mean_excess_tlp_x100": 0.0,
-        "metric": METRIC,
-        "temporal_metric": TEMPORAL_METRIC,
     }
+    details = {"metric": METRIC, "temporal_metric": TEMPORAL_METRIC}
     args.output.mkdir(parents=True, exist_ok=True)
     dump(args.output / "reward.json", result)
+    dump(args.output / "details.json", details)
     work_dir = args.output / f"work-{uuid.uuid4().hex}"
     try:
         cases = json.loads(args.cases.read_text())
@@ -317,11 +317,10 @@ def main() -> int:
             mean_excess_tlp_x100=float(gate["mean_excess_tlp_x100"] or 0.0),
             baseline_latency_mean_seconds=float(baseline_report["latency_mean_seconds"]),
             baseline_latency_median_seconds=float(baseline_report["latency_median_seconds"]),
-            quality_gate=gate,
-            cases=rows,
         )
+        details.update(quality_gate=gate, cases=rows)
     except Exception as error:
-        result["error"] = f"{type(error).__name__}: {error}"
+        details["error"] = f"{type(error).__name__}: {error}"
     finally:
         for name in ("candidate-measurement", "baseline-measurement"):
             source = work_dir / f"{name}.log"
@@ -329,6 +328,7 @@ def main() -> int:
                 shutil.copyfile(source, args.output / f"{name}.log")
         shutil.rmtree(work_dir, ignore_errors=True)
     dump(args.output / "reward.json", result)
+    dump(args.output / "details.json", details)
     print(json.dumps(result, indent=2, allow_nan=False), flush=True)
     return int(result["invalid"])
 
