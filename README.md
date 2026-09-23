@@ -1,8 +1,8 @@
 # RSI video inference
 
-Standalone, single-H100 PyTorch inference and RSI benchmark scaffolding for
-MiniMax-H3 and SANA-Video 2.0. The model definitions are expanded under
-`inference/*/model`; neither runtime imports Diffusers or SGLang.
+Standalone, single-H100 PyTorch inference for MiniMax-H3 and SANA-Video 2.0,
+plus one RSI Bench task for SANA-Video-2.0. The model definitions are expanded
+under `inference/*/model`; neither runtime imports Diffusers or SGLang.
 
 This repository contains source code only. Model weights, Enroot images,
 teacher tensors, videos, metric weights, run logs and private evaluation cases
@@ -12,11 +12,10 @@ are intentionally excluded.
 
 - `inference/minimax_h3`: native PyTorch T2VA inference, Dockerfile and Slurm launcher.
 - `inference/sana_video2`: native PyTorch T2V inference, Dockerfile and Slurm launcher.
-- `benchmark/common`: hot-latency measurement, LPIPS/Excess-tLP verification,
-  scoring, public-reference preparation and campaign budget controls.
-- `benchmark/tasks`: the two self-contained RSI task packages. MiniMax-H3
-  contains only its three public validation cases; its four final cases are a
-  private evaluator overlay. All eight SANA cases are visible test cases.
+- `tasks/sana-video2-hot-inference`: the self-contained Harbor/Modal RSI Bench
+  package. All eight SANA cases are visible test cases.
+- `benchmark/common`: legacy local experiment and analysis utilities; it is not
+  part of the submitted Harbor task.
 - `autoresearch`: reproducible campaign drivers, best submitted candidates,
   journals and temporal-flicker analysis.
 - `tests`: lightweight source/layout checks. GPU acceptance tests must run in
@@ -24,11 +23,10 @@ are intentionally excluded.
 
 ## Public evaluation contract
 
-Both workloads use one H100, batch size one, 960x544 output and 50 sampling
-steps. MiniMax-H3 uses 124 frames and SANA uses 121 frames. Models load once.
-MiniMax-H3 runs the first case once as the single untimed warmup, then times
-each case once. Timing covers text processing, denoising and decoded output;
-H3 audio decoding is also included.
+The benchmark workload uses one H100, batch size one, 960x544 output, 121
+frames, and 50 sampling steps. Models load once. The first case runs once as a
+shared untimed warmup, then all eight cases are timed once. Timing covers text
+processing, denoising, and decoded RGB output.
 
 The quality-adjusted case reward is:
 
@@ -38,7 +36,21 @@ speedup * max(0, 1 - LPIPS) * max(0, 1 - Excess-tLPx100)
 
 The complete split scores zero unless its spatial and temporal gates pass.
 Current limits are documented in each task's `task.toml` and `instruction.md`.
-The task metadata remains explicitly marked draft/unallocated/uncalibrated.
+The task metadata remains draft until its three-run Modal calibration is
+recorded.
+
+## Run the benchmark task
+
+The task images are built remotely by Harbor's Modal backend, so no local
+Docker daemon or Enroot image is required:
+
+```bash
+harbor run -p "$PWD/tasks/sana-video2-hot-inference" \
+  -a codex -m gpt-5.6-sol --ak reasoning_effort=high -e modal -y
+```
+
+Pinned public checkpoints are downloaded during the image build and inference
+runs offline.
 
 ## Build and run
 
@@ -73,14 +85,5 @@ python -m unittest discover -s benchmark/common -p 'test_*.py' -v
 Do not run model loading, image builds, bulk hashing or benchmarks on a cluster
 login node. Use explicitly sized Slurm CPU/GPU allocations.
 
-## Private evaluator boundary
-
-The MiniMax-H3 final prompts, enable token, teacher tensors and reference
-manifests are not present in this public repository. A benchmark operator must
-mount those assets into the separate verifier environment. Deleting a secret
-after committing it does not remove it from Git history, so the private
-overlay is ignored at the repository root and by the H3 task package.
-
 See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for provenance and license
 information.
-
