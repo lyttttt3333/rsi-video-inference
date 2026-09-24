@@ -182,5 +182,3 @@ class PixArtAlphaCombinedTimestepSizeEmbeddings(nn.Module):
             conditioning = timesteps_emb
 
         return conditioning
-
-
