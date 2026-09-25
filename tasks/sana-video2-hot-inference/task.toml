@@ -110,6 +110,7 @@ network_mode = "public"
 
 [environment.env]
 TASK_BUDGET_SECS = "21600"
+TASK_GPU_COUNT = "1"
 HF_HUB_OFFLINE = "1"
 TRANSFORMERS_OFFLINE = "1"
 

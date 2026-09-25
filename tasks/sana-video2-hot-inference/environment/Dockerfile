@@ -37,8 +37,9 @@ COPY baseline/ /workspace/baseline/
 COPY validation/ /workspace/validation/
 COPY workspace/timer.sh /workspace/timer.sh
 COPY workspace/check_budget.sh /workspace/check_budget.sh
+COPY workspace/quota_dashboard.py /workspace/quota_dashboard.py
 RUN chmod +x /workspace/baseline/baseline.sh /workspace/validation/val.sh \
-        /workspace/timer.sh /workspace/check_budget.sh \
+        /workspace/timer.sh /workspace/check_budget.sh /workspace/quota_dashboard.py \
     && mkdir -p /workspace/submission /logs/verifier
 
 ENV HF_HUB_OFFLINE=1 \
