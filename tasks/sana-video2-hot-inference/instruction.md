@@ -57,7 +57,7 @@ forbidden. Do not change weights, prompts, seeds, dimensions, frame count, sampl
 step count, or output semantics. Cross-step/diffusion caching, adaptive skipping,
 approximate computation, kernel fusion, SDPA/FlashAttention, CUDA graphs,
 `torch.compile`, and text/VAE path optimization are in scope. Compilation and
-experimentation still consume the 12-hour research allocation.
+experimentation still consume the 6-hour research allocation.
 
 The submission bundle must retain the entrypoint, model package, manifest, and
 license files created by `/workspace/baseline/baseline.sh`, plus

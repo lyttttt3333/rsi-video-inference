@@ -97,7 +97,7 @@ revision = "0.1.4"
 license = "BSD-2-Clause"
 
 [agent]
-timeout_sec = 43200
+timeout_sec = 21600
 
 [environment]
 build_timeout_sec = 14400
@@ -109,7 +109,7 @@ gpu_types = ["H100"]
 network_mode = "public"
 
 [environment.env]
-TASK_BUDGET_SECS = "43200"
+TASK_BUDGET_SECS = "21600"
 HF_HUB_OFFLINE = "1"
 TRANSFORMERS_OFFLINE = "1"
 
