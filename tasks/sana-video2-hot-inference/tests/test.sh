@@ -6,6 +6,7 @@ status=0
 python /tests/verify.py "$@" \
   --baseline /opt/private-baseline \
   --cases /tests/all-cases.json \
+  --heldout-cases /opt/private-eval/heldout-cases.json \
   --output /logs/verifier || status=$?
 if [[ ! -s /logs/verifier/reward.json ]]; then
   cat > /logs/verifier/reward.json <<'JSON'

@@ -15,7 +15,7 @@ email = "liyitong21@mails.tsinghua.edu.cn"
 organization = "NVIDIA"
 category = "Infra & Systems"
 status = "draft-pending-modal-calibration"
-quality_constraint = "Across all eight cases: mean LPIPS <= 0.30, worst LPIPS <= 0.50, and mean Excess-tLPx100 <= 0.30"
+quality_constraint = "Across the eight public and eight private held-out cases: mean LPIPS <= 0.30, worst LPIPS <= 0.50, and mean Excess-tLPx100 <= 0.30"
 
 [metadata.reward]
 description = "Mean of speedup * max(0, 1 - LPIPS) * max(0, 1 - Excess-tLPx100), gated to zero unless mean LPIPS <= 0.30, worst LPIPS <= 0.50, and mean Excess-tLPx100 <= 0.30."
@@ -27,7 +27,7 @@ baseline_test = { mean = 0.0, std = 0.0, runs = 0 }
 
 [[metadata.metrics]]
 name = "mean_lpips"
-description = "Mean full-resolution framewise AlexNet LPIPS across all eight cases."
+description = "Mean full-resolution framewise AlexNet LPIPS across all sixteen public and held-out cases."
 direction = "lower_better"
 sources = ["lpips"]
 
