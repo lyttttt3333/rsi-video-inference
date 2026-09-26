@@ -320,8 +320,10 @@ def main() -> int:
         if {case["id"] for case in public_cases} & {case["id"] for case in heldout_cases}:
             raise ValueError("Public and held-out case IDs must be disjoint")
         cases = public_cases + heldout_cases
+        # Keep the work root traversable by the secure-measure supervisor;
+        # individual trusted outputs are root-only below.  The candidate only
+        # gets an explicitly writable staging directory.
         work_dir.mkdir()
-        work_dir.chmod(0o700)
         public_cases_path = args.cases
         if smoke:
             # The smoke path must exercise exactly one public request as well

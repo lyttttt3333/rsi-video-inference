@@ -170,6 +170,10 @@ def main() -> int:
         "evaluator_status": "parent_timed_untrusted_worker",
     }
     try:
+        if args.trusted:
+            args.output.chmod(0o700)
+        else:
+            args.output.chmod(0o777)
         requests = json.loads(args.cases.read_text())
         if not requests:
             raise ValueError("At least one case is required")
