@@ -22,6 +22,12 @@ def control(value: dict) -> None:
 
 
 def load_module(path: Path):
+    # Candidate submissions commonly carry a sibling `model/` package.  The
+    # old in-process evaluator inserted the submission root into sys.path;
+    # preserve that contract in the isolated worker as well.
+    submission_root = str(path.parent.resolve())
+    if submission_root not in sys.path:
+        sys.path.insert(0, submission_root)
     spec = importlib.util.spec_from_file_location("candidate", path)
     if spec is None or spec.loader is None:
         raise RuntimeError(f"Cannot import candidate entrypoint: {path}")
