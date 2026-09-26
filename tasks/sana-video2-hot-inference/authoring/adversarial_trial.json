@@ -1,12 +1,16 @@
 {
-  "status": "blocked_and_detected_then_fixed",
+  "status": "passed_short_owner_trial",
   "first_probe": {
     "result": "invalid=1",
     "finding": "candidate could read the initial /logs/verifier/reward.json because the verifier output directory inherited 755/644 permissions",
     "record": "jobs/anti-cheat-eval/sana-anticheat-smoke/verifier/details.json"
   },
   "fix": "verify.py now chmods the verifier report directory 0700 before creating reports; candidate staging directories remain explicitly writable only where needed",
-  "rerun_required": true,
+  "rerun": {
+    "result": "invalid=1",
+    "error": "ANTI_CHEAT_DENIED_ALL_PROBES",
+    "record": "jobs/anti-cheat-eval/sana-anticheat-smoke-v3/verifier/details.json"
+  },
   "scope": [
     "candidate runs as UID 65534",
     "private held-out list and baseline are root-only",
