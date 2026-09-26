@@ -302,10 +302,20 @@ def main() -> int:
     try:
         public_cases = json.loads(args.cases.read_text())
         heldout_cases = json.loads(args.heldout_cases.read_text())
+        # Owner-only Modal smoke path.  The official verifier never sets this
+        # variable and therefore always requires the full 8+8 split.  It is
+        # intentionally an environment switch rather than an agent-visible
+        # task option so a short image/IPC check cannot be mistaken for a score.
+        smoke = os.environ.get("RSI_VERIFIER_SMOKE") == "1"
+        if smoke:
+            public_cases = public_cases[:1]
+            heldout_cases = heldout_cases[:1]
         if len(public_cases) != 8 or len({case["id"] for case in public_cases}) != 8:
-            raise ValueError("Exactly eight uniquely named public cases are required")
+            if not smoke:
+                raise ValueError("Exactly eight uniquely named public cases are required")
         if len(heldout_cases) != 8 or len({case["id"] for case in heldout_cases}) != 8:
-            raise ValueError("Exactly eight uniquely named held-out cases are required")
+            if not smoke:
+                raise ValueError("Exactly eight uniquely named held-out cases are required")
         if {case["id"] for case in public_cases} & {case["id"] for case in heldout_cases}:
             raise ValueError("Public and held-out case IDs must be disjoint")
         cases = public_cases + heldout_cases
