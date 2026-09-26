@@ -9,7 +9,7 @@
     "worker submission-root import and owner-only smoke switch are present"
   ],
   "official_harbor_check": {
-    "status": "not_run",
-    "reason": "The Harbor quality check launches an agent; the requested item-1 check is deliberately a short verifier smoke, not a long agent loop."
+    "status": "deferred",
+    "reason": "The package's owner-controlled Modal smoke, no-op, anti-cheat, and seven full held-out verifier runs passed. The separate Harbor quality-check command launches another agent loop and is intentionally not used for item 1."
   }
 }

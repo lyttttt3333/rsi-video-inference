@@ -3,8 +3,10 @@
   "split": "validation",
   "reward": {
     "direction": "higher_better",
-    "mean": 0.0,
-    "sample_std": 0.0,
-    "runs": 0
+    "mean": 26.3922271542,
+    "sample_std": 0.1777925774,
+    "runs": 3,
+    "unit": "seconds",
+    "split": "public validation baseline latency"
   }
 }

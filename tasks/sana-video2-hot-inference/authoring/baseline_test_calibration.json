@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "split": "eight private held-out cases",
+  "runs": 3,
+  "mean_seconds": 26.3817355271,
+  "sample_std_seconds": 0.1245416959,
+  "source_runs": [
+    "sana-heldout-fixed-claude-opus-full6",
+    "sana-heldout-fixed-claude-opus-v3",
+    "sana-heldout-fixed-codex-astra-full6"
+  ],
+  "source": "jobs/heldout-eval-fixed/*/verifier/details.json"
+}

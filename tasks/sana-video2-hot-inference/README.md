@@ -53,7 +53,8 @@ harbor run -p /absolute/path/to/tasks/sana-video2-hot-inference \
   -a codex -m gpt-5.6-sol --ak reasoning_effort=high -e modal -y
 ```
 
-The package is structurally runnable, but its release metadata remains marked
-draft until three successful validation and test baseline runs are recorded on
-Modal H100s and written to `task.toml` and
-`environment/baseline/baseline_val_reward.json`.
+The package has three independent Modal H100 baseline calibration runs recorded
+in `task.toml` and `environment/baseline/baseline_val_reward.json`. The final
+held-out report for all seven existing solutions is recorded in
+`authoring/heldout_evaluation.json` and the corresponding Harbor result
+directories under `jobs/heldout-eval-fixed/`.
