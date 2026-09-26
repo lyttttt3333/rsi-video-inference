@@ -1,5 +1,5 @@
 {
-  "status": "implemented_pending_container_rebuild",
+  "status": "smoke_verified_full_run_pending",
   "public_case_count": 8,
   "heldout_case_count": 8,
   "heldout_case_ids": [
@@ -22,11 +22,13 @@
     "candidate_runs_before_teacher": true,
     "verifier_owns_timing": true,
     "temporary_request_deleted_after_case": true,
-    "metric_and_scoring_code_root_only": true
+    "metric_and_scoring_code_root_only": true,
+    "owner_smoke_result": "jobs/heldout-smoke/sana-heldout-smoke-astra-v4/verifier/reward.json",
+    "owner_smoke_invalid": 0
   },
   "known_limitations": [
     "A request's own prompt is necessarily visible while it is being generated.",
-    "The adversarial agent trial and Modal H100 calibration are still pending.",
+    "The formal adversarial candidate trial and three-run Modal H100 calibration are still pending.",
     "Metric reward hacking requires the LPIPS and Excess-tLP quality gates to catch it."
   ]
 }

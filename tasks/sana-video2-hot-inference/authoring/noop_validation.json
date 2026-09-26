@@ -1,0 +1,5 @@
+{
+  "status": "pending_modal_noop_run",
+  "definition": "The trusted GPU-resident baseline submission is used as the candidate. It must produce finite tensors, zero invalid cases, LPIPS approximately zero, Excess-tLP approximately zero, and reward equal to its measured speedup.",
+  "required_checks": ["manifest", "summary sections", "one visible H100", "candidate/teacher tensor shape", "quality gate", "parent-owned timing"]
+}

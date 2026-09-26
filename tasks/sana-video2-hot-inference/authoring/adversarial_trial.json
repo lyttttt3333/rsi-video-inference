@@ -1,0 +1,12 @@
+{
+  "status": "pending_short_owner_trial",
+  "scope": [
+    "candidate runs as UID 65534",
+    "private held-out list and baseline are root-only",
+    "candidate is launched before teacher generation",
+    "candidate receives one request at a time",
+    "parent owns timing, tensor export, reward, and report files",
+    "temporary held-out request is deleted after each case"
+  ],
+  "expected_result": "A candidate attempting to read /opt/private-eval, alter /tests or /logs/verifier, or forge control records is denied or produces invalid=1; no private prompt or forged reward is accepted."
+}

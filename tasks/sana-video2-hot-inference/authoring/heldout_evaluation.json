@@ -1,0 +1,11 @@
+{
+  "status": "running",
+  "split": "8 public + 8 private held-out",
+  "solutions": 7,
+  "directories": "jobs/heldout-eval/",
+  "quality_gate": {
+    "mean_lpips_max": 0.3,
+    "worst_lpips_max": 0.5,
+    "mean_excess_tlp_x100_max": 0.3
+  }
+}

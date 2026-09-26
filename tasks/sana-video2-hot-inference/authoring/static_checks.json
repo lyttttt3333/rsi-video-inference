@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "checks": [
+    "task.toml parses with tomllib",
+    "public and held-out case JSON parse and contain eight unique cases each",
+    "Python verifier, worker, scoring, validation, and workspace modules compile",
+    "test.sh, val.sh, and solve.sh pass bash -n",
+    "git diff --check passes",
+    "worker submission-root import and owner-only smoke switch are present"
+  ],
+  "official_harbor_check": {
+    "status": "not_run",
+    "reason": "The Harbor quality check launches an agent; the requested item-1 check is deliberately a short verifier smoke, not a long agent loop."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "recorded_from_existing_agent_trial",
+  "agent_trials": [
+    "jobs/sana-codex-astra-full6-v1/sana-video2-hot-inference__zc3QdfQ",
+    "jobs/sana-claude-opus-v3/sana-video2-hot-inference__Ep96WCj"
+  ],
+  "selection": "The existing successful Astra and Claude v3 trials are the strong-agent evidence; they are regraded against the current isolated verifier without starting a long new RSI loop.",
+  "current_verifier_regrade": "jobs/heldout-eval/"
+}
