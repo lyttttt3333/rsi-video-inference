@@ -32,6 +32,7 @@ eval-assets/
 outputs/
 runs/
 logs/
+jobs/
 cache/
 worktrees/
 campaign-state.json
