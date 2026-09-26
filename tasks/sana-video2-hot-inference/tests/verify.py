@@ -296,6 +296,10 @@ def main() -> int:
     }
     details = {"metric": METRIC, "temporal_metric": TEMPORAL_METRIC}
     args.output.mkdir(parents=True, exist_ok=True)
+    # The verifier report directory is never part of the candidate protocol.
+    # Keep it root-only even though each untrusted measurement tensor gets its
+    # own explicitly world-writable staging directory.
+    args.output.chmod(0o700)
     dump(args.output / "reward.json", result)
     dump(args.output / "details.json", details)
     work_dir = args.output / f"work-{uuid.uuid4().hex}"

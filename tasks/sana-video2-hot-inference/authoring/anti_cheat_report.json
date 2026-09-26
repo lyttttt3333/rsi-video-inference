@@ -1,5 +1,5 @@
 {
-  "status": "smoke_verified_full_run_pending",
+  "status": "fix_applied_rerun_pending",
   "public_case_count": 8,
   "heldout_case_count": 8,
   "heldout_case_ids": [
@@ -24,7 +24,8 @@
     "temporary_request_deleted_after_case": true,
     "metric_and_scoring_code_root_only": true,
     "owner_smoke_result": "jobs/heldout-smoke/sana-heldout-smoke-astra-v4/verifier/reward.json",
-    "owner_smoke_invalid": 0
+    "owner_smoke_invalid": 0,
+    "initial_adversarial_probe": "detected candidate-readable verifier reward file; corrected by making /logs/verifier root-only"
   },
   "known_limitations": [
     "A request's own prompt is necessarily visible while it is being generated.",
