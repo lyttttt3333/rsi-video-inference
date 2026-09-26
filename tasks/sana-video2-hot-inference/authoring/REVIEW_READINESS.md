@@ -16,5 +16,6 @@ before its temporary one-request file is deleted.
 
 This is an integrity/generalization control, not a claim that metric reward
 hacking is impossible. The LPIPS, Excess-tLP and quality gates remain explicit
-task metrics, and a future review should add an adversarial trial record in the
-same style as the benchmark's other tasks.
+task metrics. The short malicious candidate trial is recorded in
+`adversarial_trial.json`: it was rejected with `invalid=1` after the report
+directory permission fix.
