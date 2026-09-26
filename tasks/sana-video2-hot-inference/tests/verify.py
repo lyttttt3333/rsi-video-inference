@@ -320,6 +320,15 @@ def main() -> int:
             raise ValueError("Public and held-out case IDs must be disjoint")
         cases = public_cases + heldout_cases
         work_dir.mkdir()
+        public_cases_path = args.cases
+        if smoke:
+            # The smoke path must exercise exactly one public request as well
+            # as one private request.  Keep the reduced request file inside
+            # the verifier-owned work directory so it is never part of the
+            # candidate submission or the published task assets.
+            public_cases_path = work_dir / "smoke-public-cases.json"
+            public_cases_path.write_text(json.dumps(public_cases, indent=2) + "\n")
+            public_cases_path.chmod(0o600)
         candidate_output = work_dir / "candidate-measurement"
         baseline_output = work_dir / "baseline-measurement"
 
@@ -327,7 +336,7 @@ def main() -> int:
         # The public split uses the normal shared-process protocol.
         candidate_report = run_measurement(
             args.submission,
-            args.cases,
+            public_cases_path,
             args.weights,
             candidate_output,
             args.measurement_timeout,
@@ -335,7 +344,7 @@ def main() -> int:
         )
         baseline_report = run_measurement(
             args.baseline,
-            args.cases,
+            public_cases_path,
             args.weights,
             baseline_output,
             args.measurement_timeout,
