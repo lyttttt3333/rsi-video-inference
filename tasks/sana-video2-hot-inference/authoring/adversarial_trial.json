@@ -5,7 +5,7 @@
     "finding": "candidate could read the initial /logs/verifier/reward.json because the verifier output directory inherited 755/644 permissions",
     "record": "jobs/anti-cheat-eval/sana-anticheat-smoke/verifier/details.json"
   },
-  "fix": "verify.py now chmods the verifier report directory 0700 before creating reports; candidate staging directories remain explicitly writable only where needed",
+  "fix": "verifier report files are created 0600, trusted measurement directories are 0700, and only the candidate's own staging directory is explicitly writable",
   "rerun": {
     "result": "invalid=1",
     "error": "ANTI_CHEAT_DENIED_ALL_PROBES",

@@ -42,9 +42,9 @@ teacher tensors, or verifier scoring code. The baseline is run in a separate
 trusted process on the same H100 and its decoded tensors and hot latency are the
 teacher/reference. Within the shared public process, the first case is the
 single warmup; held-out requests use one-case workers so no held-out list is
-ever exposed. Model loading and compilation completed during build or warmup,
-tensor export, and metric evaluation are excluded from candidate latency;
-compilation first triggered by a timed request is included.
+ever exposed. Model loading and warmup, tensor export, and metric evaluation
+are excluded from candidate latency; compilation completed during warmup is
+excluded, while compilation first triggered by a timed request is included.
 
 Run through RSI Bench/Harbor from the `rsi-benchmark` checkout:
 
