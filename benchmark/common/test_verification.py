@@ -85,26 +85,21 @@ class VerificationTests(unittest.TestCase):
             score.median_seconds([])
 
     def test_public_cases_and_fixed_shapes(self):
-        tasks = HERE.parents[1] / 'benchmark/tasks'
-        for model, slug, frames in [('minimax_h3','minimax-h3-hot-inference',124),
-                                    ('sana_video2','sana-video2-hot-inference',121)]:
-            if model == 'sana_video2':
-                public = json.loads(
-                    (tasks / slug / 'environment/validation/all-cases.json').read_text())
-            else:
-                public = json.loads(
-                    (tasks / slug / 'environment/validation/cases.json').read_text())
-            self.assertEqual(len(public), 3 if model == 'minimax_h3' else 8)
-            for r in public:
-                self.assertEqual((r['width'],r['height'],r['frames'],r['steps']), (960,544,frames,50))
-            dockerfile = (tasks / slug / 'environment/Dockerfile').read_text()
-            self.assertNotIn('COPY tests', dockerfile)
+        tasks = HERE.parents[1] / 'tasks'
+        slug = 'sana-video2-hot-inference'
+        public = json.loads(
+            (tasks / slug / 'environment/validation/all-cases.json').read_text())
+        self.assertEqual(len(public), 8)
+        for r in public:
+            self.assertEqual((r['width'], r['height'], r['frames'], r['steps']),
+                             (960, 544, 121, 50))
+        dockerfile = (tasks / slug / 'environment/Dockerfile').read_text()
+        self.assertNotIn('COPY tests', dockerfile)
 
-    def test_h3_private_overlay_is_not_published(self):
-        private = HERE.parents[1] / 'benchmark/tasks/minimax-h3-hot-inference/tests'
-        self.assertFalse((private / 'cases.json').exists())
-        self.assertFalse((private / 'verify.py').exists())
-        self.assertTrue((private / 'README.md').exists())
+    def test_only_sana_harbor_task_is_published(self):
+        tasks = HERE.parents[1] / 'tasks'
+        self.assertTrue((tasks / 'sana-video2-hot-inference').is_dir())
+        self.assertFalse((tasks / 'minimax-h3-hot-inference').exists())
 
     def test_missing_teacher_fails_closed_without_loading_model(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -5,8 +5,8 @@ Improve the hot, end-to-end text-to-video latency of the supplied standalone
 SANA-Video-2.0 implementation on one H100. The runtime is native PyTorch and does
 not depend on Diffusers or SGLang.
 
-The fixed workload is batch one, 960x544, 121 frames at 24 FPS, 50 sampler steps,
-and eight visible prompt/seed pairs. The initial implementation keeps the Gemma
+The reference workload is batch one, 960x544, 121 frames at 24 FPS, 50 sampler
+steps, and eight visible prompt/seed pairs. The initial implementation keeps the Gemma
 text encoder, SANA denoiser, and LTX VAE resident on the GPU. It uses BF16, the
 original second-order sampler, full temporal VAE decoding, and no `torch.compile`.
 Do not restore per-request model offload.
@@ -28,12 +28,14 @@ weights are under `/opt/weights`:
 - `SANA_Video_2.0_5B_720p.pth`
 - `vae/`
 
-For each evaluation, the first prompt is run once as a shared warmup. It then runs
-all eight cases exactly once for formal timing; the remaining prompts are not
-warmed up separately. Timed latency includes tokenization, text encoding,
-denoising/sampling, VAE decoding, state reset, and necessary per-request transfer.
-Initial weight loading, compilation, warmup, tensor export, MP4 encoding, and
-metric evaluation are excluded.
+Within each candidate or baseline evaluation process, the first prompt is run once
+as that process's shared warmup. It then runs all eight cases exactly once for
+formal timing; the remaining prompts are not warmed up separately. Timed latency
+includes tokenization, text encoding, denoising/sampling, VAE decoding, state
+reset, and necessary per-request transfer. Initial weight loading and compilation
+completed during build or warmup, the warmup itself, tensor export, MP4 encoding,
+and metric evaluation are excluded. Compilation first triggered by a timed
+request is included in that request's latency.
 
 After measuring the submission, the evaluator runs a fresh trusted baseline in a
 separate process on the same H100. For each case it uses the baseline's decoded
@@ -53,11 +55,15 @@ LPIPS relative to the aligned teacher, averaged over adjacent pairs and multipli
 by 100. Higher reward is better.
 
 Prompt-specific completed-output, embedding, or latent caching across requests is
-forbidden. Do not change weights, prompts, seeds, dimensions, frame count, sampler
-step count, or output semantics. Cross-step/diffusion caching, adaptive skipping,
-approximate computation, kernel fusion, SDPA/FlashAttention, CUDA graphs,
-`torch.compile`, and text/VAE path optimization are in scope. Compilation and
-experimentation still consume the 6-hour research allocation.
+forbidden. Clear all prompt-dependent diffusion/cache state at every request
+boundary; persistent compiled kernels, CUDA graphs, and allocator state are
+allowed. The evaluation cases provide the 50-step reference workload, but the
+candidate may change the denoising schedule or effective step count as an
+optimization, subject to the output contract and quality gates. Cross-step/
+diffusion caching, adaptive skipping, approximate computation, kernel fusion,
+SDPA/FlashAttention, CUDA graphs, `torch.compile`, and text/VAE path
+optimization are in scope. Compilation and experimentation still consume the
+6-hour research allocation.
 
 ## Research-budget protocol (mandatory)
 

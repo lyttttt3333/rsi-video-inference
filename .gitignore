@@ -41,6 +41,13 @@ state.json
 state.lock
 *.log
 
+# Local autoresearch reports and trajectories (keep outside the public source tree)
+autoresearch/**/journal.md
+autoresearch/**/FINAL.md
+autoresearch/**/workspace/summary.md
+autoresearch/**/quality-gate-failures-mp4/
+autoresearch/analysis/*-rescore-*.json
+
 # Private evaluator overlay. Never commit held-out prompts or teachers.
 private_eval/
 benchmark/tasks/minimax-h3-hot-inference/tests/*

@@ -16,8 +16,8 @@ are intentionally excluded.
   package. All eight SANA cases are visible test cases.
 - `benchmark/common`: legacy local experiment and analysis utilities; it is not
   part of the submitted Harbor task.
-- `autoresearch`: reproducible campaign drivers, best submitted candidates,
-  journals and temporal-flicker analysis.
+- `autoresearch`: reproducible campaign drivers and source snapshots; generated
+  journals, run records and metric artifacts are kept outside the public tree.
 - `tests`: lightweight source/layout checks. GPU acceptance tests must run in
   a Slurm GPU allocation.
 

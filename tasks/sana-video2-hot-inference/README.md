@@ -29,9 +29,11 @@ image, Slurm `.sqsh`, host model mount, or committed checkpoint is required.
 
 The evaluator measures the submitted implementation first. It then launches the
 trusted GPU-resident baseline in a separate process on the same H100 and uses its
-decoded tensors and hot latency as the teacher/reference. Model loading, compile,
-the single shared warmup, tensor export, and metric evaluation are excluded from
-the candidate latency.
+decoded tensors and hot latency as the teacher/reference. Within each process,
+the first case is the single shared warmup. Model loading and compilation
+completed during build or warmup, tensor export, and metric evaluation are
+excluded from candidate latency; compilation first triggered by a timed request
+is included.
 
 Run through RSI Bench/Harbor from the `rsi-benchmark` checkout:
 

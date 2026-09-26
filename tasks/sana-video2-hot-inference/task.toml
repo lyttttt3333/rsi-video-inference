@@ -18,7 +18,7 @@ status = "draft-pending-modal-calibration"
 quality_constraint = "Across all eight cases: mean LPIPS <= 0.30, worst LPIPS <= 0.50, and mean Excess-tLPx100 <= 0.30"
 
 [metadata.reward]
-description = "Mean of speedup * (1 - LPIPS) * (1 - Excess-tLPx100), gated to zero unless mean LPIPS <= 0.30, worst LPIPS <= 0.50, and mean Excess-tLPx100 <= 0.30."
+description = "Mean of speedup * max(0, 1 - LPIPS) * max(0, 1 - Excess-tLPx100), gated to zero unless mean LPIPS <= 0.30, worst LPIPS <= 0.50, and mean Excess-tLPx100 <= 0.30."
 direction = "higher_better"
 theoretical_best = 4500000.0
 # Populated with three successful Modal repetitions before release.
