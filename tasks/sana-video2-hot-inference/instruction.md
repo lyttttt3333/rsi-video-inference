@@ -113,7 +113,7 @@ For each of the sixteen cases, the evaluator computes:
 
 ```text
 case_reward = (baseline_seconds / candidate_seconds)
-              * (1 - LPIPS)
+              * max(0, 1 - LPIPS)
               * max(0, 1 - Excess-tLPx100)
 ```
 
@@ -152,13 +152,10 @@ Missing, malformed, nonfinite, timed-out, or partial results fail closed.
 
 ## Research budget
 
-This campaign has a **6 GPU-hour research budget** on one H100. Treat six hours
-as the minimum research duration, not as an optional timeout. Unless there is
-an unrecoverable environment failure, continue profiling, testing kernels,
-cache schedules, compiler settings, and speed/quality trade-offs until the
-shared timer reaches zero. Do not stop after one working optimization or one
-passing validation. Preserve the best validated submission while experimenting
-so a later failed experiment cannot invalidate the final artifact.
+This campaign has a **maximum 6 GPU-hour research budget** on one H100. The
+agent may stop earlier, but must never exceed the six-hour limit. Preserve the
+best validated submission while experimenting so a later failed experiment
+cannot invalidate the final artifact.
 
 The timer starts with the environment healthcheck. Inspect the live dashboard
 before and after every substantial experiment:

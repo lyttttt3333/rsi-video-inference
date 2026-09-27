@@ -131,7 +131,7 @@ def run_measurement(args, requests: list[dict], warmup_request: dict,
                             stream, map_location="cpu", weights_only=True
                         )
                     except (TypeError, AttributeError):
-                        # The CW audit tensor shim accepts a pathname rather
+                        # The tensor-shim compatibility mode accepts a pathname rather
                         # than a file object.  Production torch takes the
                         # already-open descriptor above, so this fallback is
                         # used only by that explicitly marked shim.

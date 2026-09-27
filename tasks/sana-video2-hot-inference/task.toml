@@ -9,7 +9,19 @@ keywords = ["rsi-bench", "inference", "video", "latency"]
 
 [[task.authors]]
 name = "Yitong Li"
-email = "liyitong21@mails.tsinghua.edu.cn"
+email = "yitongl@nvidia.com"
+
+[[task.authors]]
+name = "Haozhe Liu"
+email = "haozhel@nvidia.com"
+
+[[task.authors]]
+name = "Tian Ye"
+email = "oye@nvidia.com"
+
+[[task.authors]]
+name = "Enze Xie"
+email = "enzex@nvidia.com"
 
 [metadata]
 organization = "NVIDIA"
