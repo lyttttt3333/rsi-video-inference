@@ -1,0 +1,15 @@
+{
+  "status": "passed_static_and_cpu_smoke_formal_audit_pending",
+  "checks": [
+    "task.toml parses with tomllib",
+    "public and held-out case JSON parse and contain eight unique cases each",
+    "Python verifier, worker, scoring, validation, and workspace modules compile",
+    "test.sh, val.sh, and solve.sh pass bash -n",
+    "git diff --check passes",
+    "worker submission-root import and owner-only smoke switch are present"
+  ],
+  "official_harbor_check": {
+    "status": "deferred",
+    "reason": "Static checks, CPU tensor-shim protocol smoke, Modal image smoke, and Modal fixed-candidate verifier smoke passed after verifier hardening. The owner-controlled CW adversarial suite must be rerun against the new runtime before anti-cheat is recorded as formally passed; the separate Harbor quality-check command launches another agent loop and is intentionally not used for item 1."
+  }
+}

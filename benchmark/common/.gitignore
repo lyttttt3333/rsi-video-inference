@@ -1,0 +1,4 @@
+__pycache__/
+campaign-state.json
+campaign-state.lock
+reports/

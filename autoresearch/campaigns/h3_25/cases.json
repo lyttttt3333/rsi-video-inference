@@ -1,0 +1,43 @@
+[
+  {
+    "prompt": "integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a baker opening the shutters of a small street bakery before sunrise. The camera pushes in with small amplitude at slow speed as the middle-aged baker with a calm, slightly raspy voice (S1) places a fresh loaf on the wooden counter and says: <d>[English] First batch of the morning.</d> [Shot 2] At 00:05.000, the camera cuts to a close-up of steam rising from the sliced bread while the baker's final words carry over from the previous shot.\n\noverall_soundscape: Wooden shutters scrape open over a quiet street as trays clink softly inside the bakery. The doorbell rings once, followed by light footsteps and the crisp sound of bread being sliced.\n\nnon_diegetic_music: A soft acoustic-guitar pattern at a moderate tempo, joined by sparse upright-bass notes and a gentle fade at the end.",
+    "source": "https://raw.githubusercontent.com/MiniMax-AI/MiniMax-H3/main/skills/h3-prompt-writing/references/base-en.txt",
+    "source_type": "h3_official_guide",
+    "id": "minimax_h3-02",
+    "height": 544,
+    "width": 960,
+    "frames": 124,
+    "fps": 24,
+    "steps": 50,
+    "seed": 17
+  },
+  {
+    "prompt": "A young woman walks gracefully through a sunlit garden, her dress flowing in the gentle breeze.",
+    "source": "https://solutions.minimaxi.com/debug/video",
+    "source_asset": "https://filecdn.minimax.chat/platform_solution_web/prod-0.1.35/_next/static/chunks/app/debug/video/page-3f9d00a5ea9daed0.js",
+    "source_type": "minimax_platform_generic_template",
+    "source_title": "Character Action",
+    "id": "minimax_h3-03",
+    "height": 544,
+    "width": 960,
+    "frames": 124,
+    "fps": 24,
+    "steps": 50,
+    "seed": 31
+  },
+  {
+    "prompt": "Majestic mountains at sunrise, golden light painting the snow-capped peaks, time-lapse clouds drifting by.",
+    "source": "https://solutions.minimaxi.com/debug/video",
+    "source_asset": "https://filecdn.minimax.chat/platform_solution_web/prod-0.1.35/_next/static/chunks/app/debug/video/page-3f9d00a5ea9daed0.js",
+    "source_type": "minimax_platform_generic_template",
+    "source_title": "Natural Landscape",
+    "id": "minimax_h3-04",
+    "height": 544,
+    "width": 960,
+    "frames": 124,
+    "fps": 24,
+    "steps": 50,
+    "seed": 53
+  }
+]
+
