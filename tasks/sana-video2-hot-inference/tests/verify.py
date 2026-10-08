@@ -308,7 +308,7 @@ def main() -> int:
         if any((r["prompt"], r["seed"]) == warmup_identity for r in public_cases + heldout_cases):
             raise ValueError("Warmup must be disjoint from all public and held-out cases")
         # Owner-only Modal smoke path.  The official verifier never sets this
-        # variable and therefore always requires the full 8+8 split.  It is
+        # variable and therefore always scores the full eight-case held-out split. It is
         # intentionally an environment switch rather than an agent-visible
         # task option so a short image/IPC check cannot be mistaken for a score.
         smoke = os.environ.get("RSI_VERIFIER_SMOKE") == "1"
@@ -323,21 +323,13 @@ def main() -> int:
                 raise ValueError("Exactly eight uniquely named held-out cases are required")
         if {case["id"] for case in public_cases} & {case["id"] for case in heldout_cases}:
             raise ValueError("Public and held-out case IDs must be disjoint")
-        cases = public_cases + heldout_cases
+        # Public inputs are diagnostics only; never include them in final scoring.
+        cases = heldout_cases
         # Keep the work root traversable by the secure-measure supervisor;
         # individual trusted outputs are root-only below.  The candidate only
         # gets an explicitly writable staging directory.
         work_dir.mkdir(mode=0o711)
         work_dir.chmod(0o711)
-        public_cases_path = args.cases
-        if smoke:
-            # The smoke path must exercise exactly one public request as well
-            # as one private request.  Keep the reduced request file inside
-            # the verifier-owned work directory so it is never part of the
-            # candidate submission or the published task assets.
-            public_cases_path = work_dir / "smoke-public-cases.json"
-            public_cases_path.write_text(json.dumps(public_cases, indent=2) + "\n")
-            public_cases_path.chmod(0o600)
         # Aggregated tensors are verifier-owned and never writable by the
         # candidate.  Each worker receives a separate candidate-owned staging
         # directory, which is copied through O_NOFOLLOW after measurement.
@@ -346,46 +338,13 @@ def main() -> int:
         make_dir(candidate_output, mode=0o700)
         make_dir(baseline_output, mode=0o700)
 
-        # Candidate executes first and cannot observe teacher outputs generated later.
-        # The public split uses the normal shared-process protocol.
-        details["phase"] = "candidate_public_measurement"
-        candidate_report = run_measurement(
-            args.submission,
-            public_cases_path,
-            args.weights,
-            work_dir / "candidate-public-report",
-            work_dir / "candidate-public-staging",
-            candidate_output,
-            0,
-            args.warmup_cases,
-            args.measurement_timeout,
-            untrusted=True,
-        )
-        details["phase"] = "baseline_public_measurement"
-        baseline_report = run_measurement(
-            args.baseline,
-            public_cases_path,
-            args.weights,
-            work_dir / "baseline-public-report",
-            work_dir / "baseline-public-staging",
-            baseline_output,
-            0,
-            args.warmup_cases,
-            args.measurement_timeout,
-            untrusted=False,
-        )
-
         # For the private split the verifier reveals only one current request
         # at a time through the parent-controlled worker pipe.  The temporary
         # one-case file itself remains root-only, is deleted before the next
         # case, and the original private list remains in a root-only directory.
-        candidate_all = dict(candidate_report)
-        candidate_all["samples"] = list(candidate_report.get("samples", []))
-        candidate_all["case_errors"] = dict(candidate_report.get("case_errors", {}))
-        baseline_all = dict(baseline_report)
-        baseline_all["samples"] = list(baseline_report.get("samples", []))
-        baseline_all["case_errors"] = dict(baseline_report.get("case_errors", {}))
-        for index, request in enumerate(heldout_cases, start=len(public_cases)):
+        candidate_all = {"samples": [], "case_errors": {}}
+        baseline_all = {"samples": [], "case_errors": {}}
+        for index, request in enumerate(heldout_cases):
             one_case = work_dir / f"heldout-request-{index}.json"
             one_case.write_text(json.dumps([request], indent=2) + "\n")
             one_case.chmod(0o600)
@@ -420,6 +379,10 @@ def main() -> int:
                     args.measurement_timeout,
                     False,
                 )
+                if index == 0:
+                    for key in ("device", "device_memory", "torch_version", "cuda_version"):
+                        candidate_all[key] = candidate_case_report[key]
+                        baseline_all[key] = baseline_case_report[key]
                 for sample in candidate_case_report.get("samples", []):
                     candidate_all.setdefault("samples", []).append(
                         {**sample, "request": index}
@@ -464,7 +427,8 @@ def main() -> int:
             baseline_latency_mean_seconds=float(baseline_report["latency_mean_seconds"]),
             baseline_latency_median_seconds=float(baseline_report["latency_median_seconds"]),
         )
-        details.update(quality_gate=gate, cases=rows)
+        details.update(quality_gate=gate, cases=rows, scoring_split="heldout_only",
+                       public_cases_scored=0, heldout_cases_scored=len(rows))
     except Exception as error:
         details["error"] = f"{type(error).__name__}: {error}"
     finally:

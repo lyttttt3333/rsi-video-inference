@@ -52,12 +52,13 @@ The canonical instruction reminder about recipe reproduction is satisfied by
 executing the actual submitted source bundle in a clean environment.
 
 `/workspace/validation/val.sh` measures eight public prompt/seed pairs for agent
-feedback. `/tests/test.sh` evaluates those eight public cases plus eight private,
+feedback only. `/tests/test.sh` evaluates only eight private,
 disjoint held-out pairs. Held-out inputs are copied only into the no-network
 verifier image, under root-only `/opt/private-eval`. They test generalization
-of the same runtime at the same output shape. The full score gives each of the
-sixteen cases equal weight. Historical held-out-only split reports in
-`authoring/heldout_evaluation.json` are labeled separately from the full score.
+of the same runtime at the same output shape. Final reward and quality gates
+use only the eight held-out cases, with equal weight. Public diagnostic results
+cannot increase or decrease the final score. Historical split reports are in
+`authoring/heldout_evaluation.json`.
 
 Both entrypoints write `reward.json` with reward, invalid, raw reward, latency
 in seconds and quality metrics, plus `details.json` with case results and gate
@@ -68,7 +69,7 @@ gate receives reward zero with invalid zero.
 ## Warmup and timing
 
 Each process performs exactly one dedicated public warmup from
-`warmup-cases.json`. Its prompt/seed pair is disjoint from all sixteen scored
+`warmup-cases.json`. Its prompt/seed pair is disjoint from all sixteen public and private
 requests and is never scored. Both measurement paths reject overlapping
 warmup identities. Each private worker receives only its current held-out
 request after completing this dedicated warmup. Reusing the warmup output for
@@ -95,7 +96,7 @@ For each case, higher is better:
 case_reward = (baseline_seconds / candidate_seconds)
               * max(0, 1 - LPIPS)
               * max(0, 1 - Excess-tLPx100)
-reward = arithmetic_mean(case_reward over all 16 cases)
+reward = arithmetic_mean(case_reward over the 8 held-out cases)
 ```
 
 The speed ratio controls for same-run GPU variation. Each quality multiplier

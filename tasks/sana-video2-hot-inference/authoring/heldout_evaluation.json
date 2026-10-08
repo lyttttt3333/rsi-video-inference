@@ -1,6 +1,6 @@
 {
   "status": "completed",
-  "split": "8 public + 8 private held-out",
+  "split": "8 private held-out; public diagnostic rewards reported separately",
   "solutions": 3,
   "directories": "not published; see this record",
   "total_remote_gpu_hours": "not published",

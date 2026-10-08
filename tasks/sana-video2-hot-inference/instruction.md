@@ -102,11 +102,12 @@ export callback.
 
 After the submission is measured, the evaluator runs a fresh trusted baseline
 in a separate process on the same H100. The baseline's decoded RGB tensors are
-the teachers for all eight public and eight private cases.
+the teachers. Public validation uses its eight public cases for feedback only;
+final verification measures and scores only the eight private held-out cases.
 
 ### Reward
 
-For each of the sixteen cases, the evaluator computes:
+For each of the eight private held-out cases, the final evaluator computes:
 
 ```text
 case_reward = (baseline_seconds / candidate_seconds)
@@ -114,13 +115,15 @@ case_reward = (baseline_seconds / candidate_seconds)
               * max(0, 1 - Excess-tLPx100)
 ```
 
-The raw reward is the arithmetic mean of the sixteen case rewards; higher is
+The raw reward is the arithmetic mean of the eight held-out case rewards; higher is
 better. LPIPS 0.1.4 with AlexNet is evaluated frame by frame at full
 resolution. `Excess-tLP` is the positive increase in adjacent-frame LPIPS
 relative to the aligned teacher, averaged over adjacent pairs and multiplied by
 100.
 
-The final reward is zero unless all of these gates hold:
+Public validation reports speed, quality and diagnostic reward only; it never
+contributes to the final reward or gates. The final reward is zero unless all
+of these gates hold on the eight held-out cases:
 
 - mean LPIPS is at most `0.30`;
 - worst-case LPIPS is at most `0.50`; and

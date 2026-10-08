@@ -1,21 +1,22 @@
 {
-  "status": "passed",
-  "split": "8 public + 8 private",
+  "status": "passed_reaggregated_heldout_subset",
+  "split": "8 private held-out only",
   "runs": 3,
   "reward": {
-    "mean": 1.0016671598206992,
-    "std": 0.002661538297820192,
+    "mean": 1.0006510746936959,
+    "std": 0.000536288857221199,
     "runs": 3
   },
   "latency_seconds": {
-    "mean": 28.231199867708327,
-    "std": 5.459997932119985,
+    "mean": 28.272130001666653,
+    "std": 5.53785421055607,
     "runs": 3
   },
   "source_runs": [
-    "pr30-baseline-1",
-    "pr30-baseline-2",
-    "pr30-baseline-3"
+    "pr30-baseline-1-heldout-subset",
+    "pr30-baseline-2-heldout-subset",
+    "pr30-baseline-3-heldout-subset"
   ],
-  "source": "authoring/calibration.json"
+  "source": "authoring/calibration.json",
+  "provenance": "Reaggregated held-out rows from the three completed Modal 16-case baseline runs; each private worker already used the same isolated one-request protocol. Not three new runs of the revised entrypoint."
 }
