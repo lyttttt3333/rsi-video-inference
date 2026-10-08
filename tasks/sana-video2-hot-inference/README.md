@@ -187,9 +187,14 @@ tests/private/                    verifier-only held-out cases
 authoring/                        calibration, gate rationale, three full6 results
 ```
 
-`ANTI_CHEAT_FIX.md`, `anti_cheat_report.json` and `adversarial_trial.json` record
+`ANTI_CHEAT_FIX.md` and `anti_cheat_report.json` record
 verifier controls and test evidence. `REVIEW_READINESS.md` describes package
-checks. `test_warmup_protocol.py` tests disjoint inputs, one-warmup sequencing,
+checks. Before teacher timing the root verifier kills all live processes with
+reserved candidate UID 65534, including detached sessions, using pidfds and
+fails closed if inspection or cleanup cannot finish. Candidate processes have
+`no_new_privs` set. `test_process_cleanup.py` tests these boundaries inside an
+isolated root container, not on a shared login node.
+`test_warmup_protocol.py` tests disjoint inputs, one-warmup sequencing,
 cached-warmup rejection in a CPU control-flow substitute, and fail-closed overlap
 handling in the real secure supervisor. H100 calibration exercises actual
 model inference and LPIPS. Only Claude Opus full6, Codex Luna full6 and Codex Sol full6 experiment
