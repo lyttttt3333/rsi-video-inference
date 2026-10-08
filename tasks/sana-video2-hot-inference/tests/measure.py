@@ -12,16 +12,21 @@ import time
 
 
 def hot_measure(runner, requests, synchronize, warmup, repeats, validate, save=None, clock=time.perf_counter,
-                continue_on_error=False, warmup_scope='all'):
+                continue_on_error=False, warmup_scope='first', warmup_requests=None):
     if warmup < 0 or repeats < 1 or not requests:
         raise ValueError('Warmup must be non-negative; at least one request and repeat are required')
     if warmup_scope not in ('all', 'first'):
         raise ValueError("warmup_scope must be 'all' or 'first'")
-    # One shared warmup runs the first case once before any timed request.
-    # Prompt-specific embedding/output caches remain forbidden.
+    if warmup and not warmup_requests:
+        raise ValueError('A dedicated warmup request is required')
+    if warmup and warmup_scope != 'first':
+        raise ValueError('Only one dedicated warmup request is supported')
+    if warmup_requests:
+        identities = {(r['prompt'], r['seed']) for r in requests}
+        if len(warmup_requests) != 1 or any((r['prompt'], r['seed']) in identities for r in warmup_requests):
+            raise ValueError('Warmup must contain one unscored, disjoint prompt/seed pair')
     errors = {}
     for _ in range(warmup):
-        warmup_requests = requests[:1] if warmup_scope == 'first' else requests
         for index, request in enumerate(warmup_requests):
             prototype = dict(request)
             try:
@@ -31,9 +36,7 @@ def hot_measure(runner, requests, synchronize, warmup, repeats, validate, save=N
                 validate(output, prototype)
                 del output
             except Exception as error:
-                if not continue_on_error:
-                    raise
-                errors[index] = f'{type(error).__name__}: {error}'
+                raise RuntimeError(f'Dedicated warmup failed: {error}') from error
     samples = []
     for repeat in range(repeats):
         for index, request in enumerate(requests):
@@ -82,6 +85,7 @@ def main():
     parser.add_argument('--model', choices=['sana_video2'], required=True)
     parser.add_argument('--output', type=Path, default=Path('/logs/verifier'))
     parser.add_argument('--warmup', type=int, default=1)
+    parser.add_argument('--warmup-cases', type=Path, default=Path(__file__).with_name('warmup-cases.json'))
     parser.add_argument('--repeats', type=int, default=1)
     parser.add_argument('--warmup-scope', choices=['all', 'first'], default='first')
     parser.add_argument('--save-tensors', action='store_true', help='Export decoded tensors after timing; may be large')
@@ -120,7 +124,8 @@ def main():
         result.update(hot_measure(runner, requests, torch.cuda.synchronize, args.warmup, args.repeats,
                                  lambda out, req: validate_output(out, req, args.model, torch), save,
                                  continue_on_error=args.continue_on_error,
-                                 warmup_scope=args.warmup_scope))
+                                 warmup_scope=args.warmup_scope,
+                                 warmup_requests=json.loads(args.warmup_cases.read_text())))
         result.update(invalid=0, device=torch.cuda.get_device_name(0),
                       device_memory=torch.cuda.get_device_properties(0).total_memory,
                       torch_version=torch.__version__, cuda_version=torch.version.cuda,

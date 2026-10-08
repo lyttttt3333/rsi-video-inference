@@ -1,5 +1,6 @@
 {
   "status": "passed",
+  "upstream_static_controls": {"passed": 26, "failed": 0, "revision": "5e8dd86", "slurm_job": 19886424},
   "checks": [
     "task.toml parses with tomllib",
     "public and held-out case JSON parse and contain eight unique cases each",

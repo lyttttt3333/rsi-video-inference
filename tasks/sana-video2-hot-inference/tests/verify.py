@@ -272,6 +272,7 @@ def main() -> int:
     parser.add_argument("--weights", type=Path, default=Path("/opt/weights"))
     parser.add_argument("--cases", type=Path, required=True)
     parser.add_argument("--heldout-cases", type=Path, required=True)
+    parser.add_argument("--warmup-cases", type=Path, default=HERE / "warmup-cases.json")
     parser.add_argument("--output", type=Path, default=Path("/logs/verifier"))
     parser.add_argument("--measurement-timeout", type=int, default=4500)
     args = parser.parse_args()
@@ -300,6 +301,12 @@ def main() -> int:
     try:
         public_cases = json.loads(args.cases.read_text())
         heldout_cases = json.loads(args.heldout_cases.read_text())
+        warmup_cases = json.loads(args.warmup_cases.read_text())
+        if len(warmup_cases) != 1:
+            raise ValueError("Exactly one unscored public warmup is required")
+        warmup_identity = (warmup_cases[0]["prompt"], warmup_cases[0]["seed"])
+        if any((r["prompt"], r["seed"]) == warmup_identity for r in public_cases + heldout_cases):
+            raise ValueError("Warmup must be disjoint from all public and held-out cases")
         # Owner-only Modal smoke path.  The official verifier never sets this
         # variable and therefore always requires the full 8+8 split.  It is
         # intentionally an environment switch rather than an agent-visible
@@ -350,7 +357,7 @@ def main() -> int:
             work_dir / "candidate-public-staging",
             candidate_output,
             0,
-            public_cases_path,
+            args.warmup_cases,
             args.measurement_timeout,
             untrusted=True,
         )
@@ -363,7 +370,7 @@ def main() -> int:
             work_dir / "baseline-public-staging",
             baseline_output,
             0,
-            public_cases_path,
+            args.warmup_cases,
             args.measurement_timeout,
             untrusted=False,
         )
@@ -396,7 +403,7 @@ def main() -> int:
                     candidate_one_staging,
                     candidate_output,
                     index,
-                    public_cases_path,
+                    args.warmup_cases,
                     args.measurement_timeout,
                     True,
                 )
@@ -409,7 +416,7 @@ def main() -> int:
                     baseline_one_staging,
                     baseline_output,
                     index,
-                    public_cases_path,
+                    args.warmup_cases,
                     args.measurement_timeout,
                     False,
                 )
